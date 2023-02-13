@@ -9,10 +9,11 @@ class BooksController < ApplicationController
     #データをデータベースへ保存する
     if @book.save
     #book一覧画面へリダイレクト
-    redirect_to( book_path(@book.id))
-   else
+    flash[:notice] = "successfully create."
+    redirect_to book_path(@book.id)
+    else
      render :index
-   end
+    end
   end
   
   def index
@@ -31,12 +32,14 @@ class BooksController < ApplicationController
   def update
     book = Book.find(params[:id])
     book.update(book_params)
+    flash[:notice] = "successfully updated."
     redirect_to book_path(book.id)
   end
   
   def destroy
    book= Book.find(params[:id])
    book.destroy
+   flash[:notice] = "successfully destroy."
    redirect_to '/books/'
   end
   
